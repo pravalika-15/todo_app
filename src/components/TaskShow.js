@@ -1,19 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import TaskEdit from "./TaskEdit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import TasksContext from "../context/tasks";
 
 function TaskShow({ task, onDelete, onEdit, onComplete }) {
   const [showEdit, setShowEdit] = useState(false);
+  const { deleteById, taskComplete } = useContext(TasksContext);
   const handleDelete = () => {
-    onDelete(task.id);
+    deleteById(task.id);
   };
   const handleEdit = () => {
     setShowEdit(!showEdit);
   };
 
-  const handleSubmit = (id, newTitle) => {
-    onEdit(id, newTitle);
+  const handleSubmit = () => {
+    // onEdit(id, newTitle);
     setShowEdit(false);
   };
 
@@ -22,7 +24,7 @@ function TaskShow({ task, onDelete, onEdit, onComplete }) {
   function handleCheckboxChange(event) {
     const isChecked = event.target.checked;
     setCompleted(isChecked);
-    onComplete(task.id, task.title, isChecked);
+    taskComplete(task.id, task.title, isChecked);
     // console.log(event.target.checked);
     // console.log(completed);
     // console.log(completed);
